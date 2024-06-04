@@ -1,0 +1,30 @@
+_target_: src.models.model_module.NetModule
+_partial_: true
+
+model:
+  _target_: src.models.components.model.MLPModel
+  _partial_: true
+  encoder: null
+  layer_num: 2
+  hidden_size: -1  # 4*hidden_channels
+  dropout_rate: 0.2
+  act: 'leaky_relu'
+  reduce_op: 'add'
+  
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.0004
+  weight_decay: 0.0
+
+lr_scheduler:
+  warmup: 0.01
+  interval: "step"
+  scheduler:
+    _target_: transformers.optimization.get_cosine_schedule_with_warmup
+    _partial_: true
+
+# derivative: False
+# TODO
+# compile model for faster training with pytorch 2.0
+# compile: False

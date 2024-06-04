@@ -1,0 +1,44 @@
+_target_: src.data.datamodule.DataModule
+
+dataset_name: moleculecla
+data_dir: null
+task_idx: -1
+lmdb_folder: null
+load_lmdb: True
+
+train:
+  dataset:
+    _target_: src.data.components.dataset.MoleculeCLADataset
+    _partial_: true
+    target: ADRB2
+    embed_path: ''
+    data_dir: ''
+    split_file: ''
+
+val:
+  dataset:
+    _target_: src.data.components.dataset.MoleculeCLADataset
+    _partial_: true
+    target: ADRB2
+    embed_path: ''
+    data_dir: ''
+    split_file: ''
+
+test:
+  dataset:
+    _target_: src.data.components.dataset.MoleculeCLADataset
+    _partial_: true
+    target: ADRB2
+    embed_path: ''
+    data_dir: ''
+    split_file: ''
+
+collate_fn: 
+  _target_: src.data.components.collate_fn.DownstramTaskPosBatchCollate
+  is_z_long: False
+
+# collate_fn: null
+
+batch_size: 128
+num_workers: 1
+pin_memory: False

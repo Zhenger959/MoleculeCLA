@@ -1,0 +1,94 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+defaults:
+  - override /data: moleculecla
+  - override /model: mlp
+  - override /callbacks: default
+  - override /trainer: gpu
+  - override /logger: many_loggers
+
+seed: 1
+
+project: "moleculecla"
+group: "model1"
+tags: ["ADRB2"]
+task_name: "moleculecla_model1_ADRB2"
+
+trainer:
+  min_epochs: 1
+  max_epochs: 50
+  # gradient_clip_val: 0.5
+  # devices: 4
+
+data:
+  task_idx: 0
+  batch_size: 128
+
+  train:
+    dataset:
+      _target_: src.data.components.dataset.MoleculeCLADataset
+      _partial_: true
+      target: ADRB2
+      embed_path: '/drug/zjx/DockingData/feats_path/mols_unimol.pkl'
+      data_dir: '/drug/zjx/DockingData/full_labels_4'
+      split_file: '/data/protein/SKData/DockingData2/dataset_v2.csv'
+
+  val:
+    dataset:
+      _target_: src.data.components.dataset.MoleculeCLADataset
+      _partial_: true
+      target: ADRB2
+      embed_path: '/drug/zjx/DockingData/feats_path/mols_unimol.pkl'
+      data_dir: '/drug/zjx/DockingData/full_labels_4'
+      split_file: '/data/protein/SKData/DockingData2/dataset_v2.csv'
+
+  test:
+    dataset:
+      _target_: src.data.components.dataset.MoleculeCLADataset
+      _partial_: true
+      target: ADRB2
+      embed_path: '/drug/zjx/DockingData/feats_path/mols_unimol.pkl'
+      data_dir: '/drug/zjx/DockingData/full_labels_4'
+      split_file: '/data/protein/SKData/DockingData2/dataset_v2.csv'
+
+  
+  dataset_name: moleculecla
+  num_workers: 1
+  pin_memory: False
+  
+  load_lmdb: True
+  lmdb_folder: null
+  data_dir: null
+
+model:
+  encoder_ckpt_path: null
+
+  optimizer:
+    lr: 0.0004
+    weight_decay: 0.0
+  lr_scheduler:
+    warmup: 0.00
+    interval: "step"
+    scheduler:
+      # _target_: transformers.optimization.get_polynomial_decay_schedule_with_warmup
+      _target_: transformers.optimization.get_cosine_schedule_with_warmup
+      _partial_: true
+
+
+callbacks:
+  model_checkpoint:
+    monitor: 'val/loss'
+    mode: 'min'
+    save_top_k: -1
+  early_stopping:
+    monitor: 'val/loss'
+    mode: 'min'
+
+logger:
+  wandb:
+    project: ${project}
+    tags: ${tags}
+    group: ${group}
+    name: ${task_name}
