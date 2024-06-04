@@ -19,7 +19,7 @@ We present MoleculeCLA: a large-scale dataset consisting of approximately 140,00
 ### Prerequisites
 MoleculeCLA can download from https://huggingface.co/datasets/shikun001/MoleculeCLA
 
-Model latent representations and descriptors can download from.
+Model latent representations and descriptors can download from link https://drive.google.com/drive/folders/1vs0CtQmSwlX0BdjHtQeSHbw9p1XCkFOE
 
 ### Installation
 ```
