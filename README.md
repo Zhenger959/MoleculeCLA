@@ -90,7 +90,7 @@ bash scripts\mlp.sh
 ```
 
 ## License
-Our dataset is available under the CC-BY license. The evaluation code is hosted by the GitHub organization and uses the MIT license.
+Our dataset is available under the MIT license. The evaluation code is hosted by the GitHub organization and uses the MIT license.
 
 <!-- ## Contributing
 
