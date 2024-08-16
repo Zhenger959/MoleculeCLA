@@ -128,7 +128,16 @@ python src/mlp_main.py \
 ```
 
 ### Fine-tuning
-We loaded the parameter values from the offical pre-trained models checkpoints, and fine-tune them on five representative tasks (hbond, ecoul, esite, docking and emodel). In our paper, we train a separate MLP model for each protein target and simultaneously predict these tasks.
+We loaded the parameter values from the offical pre-trained models checkpoints, and fine-tune them on five representative tasks (hbond, ecoul, esite, docking and emodel). In our paper, we train a separate MLP model for each protein target and simultaneously predict these tasks. The detailed hyperparameters used in each pre-training method are listed in the table below. Specifically, UniMAP employs grid search to select the optimal learning rate and weight decay for each task. The search ranges are provided in the corresponding positions of the table.
+
+
+| Methods | Optimizer | Learning rate     | Weight decay      | Epoch | Batch size |
+|---------|-----------|-------------------|-------------------|-------|------------|
+| Uni-Mol | Adam      | 4.00E-04          | 0                 | 50    | 128        |
+| UniMAP  | Adam      | (1e-6, 1e-4)      | (1e-7, 1e-3)      | 50    | 64         |
+| Frad    | Adam      | 1.00E-04          | 0                 | 100   | 32         |
+| SliDe   | Adam      | 1.00E-04          | 0                 | 100   | 32         |
+
 
 ## Citation
 ```
