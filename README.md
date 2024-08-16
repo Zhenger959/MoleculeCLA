@@ -1,3 +1,10 @@
+<!--
+ * @Author: Jiaxin Zheng
+ * @Date: 2024-06-06 11:01:32
+ * @LastEditors: Jiaxin Zheng
+ * @LastEditTime: 2024-08-16 15:19:07
+ * @Description: 
+-->
 # MoleculeCLA
 ## Overview
 We present MoleculeCLA: a large-scale dataset consisting of approximately 140,000 small molecules derived from computational ligand-target binding analysis, providing nine properties that cover chemical, physical, and biological aspects.
@@ -15,30 +22,16 @@ We present MoleculeCLA: a large-scale dataset consisting of approximately 140,00
 |          | glide\_emodel (emodel)         | Model energy                                  | Binding affinity              |
 
 ## Getting Started
-
-### Prerequisites
-MoleculeCLA can download from https://huggingface.co/datasets/shikun001/MoleculeCLA
-
-Model latent representations and descriptors can download from link https://drive.google.com/drive/folders/1vs0CtQmSwlX0BdjHtQeSHbw9p1XCkFOE
-
-### Installation
-```
-conda create -n py3.9 python=3.9
-conda activate py3.9
-pip install -r requirements.txt
-```
+### Data Download
+MoleculeCLA can download from [HuggingFace](https://huggingface.co/datasets/shikun001/MoleculeCLA).
 
 ### Data Format
-
-The URL to Croissant metadata record:
-https://huggingface.co/api/datasets/shikun001/MoleculeCLA/croissant
-
-
-The Documentaion of data files in the https://huggingface.co/datasets/shikun001/MoleculeCLA
 
 - The 'data.csv' file contains information on scaffold splitting for training, testing, and validation sets, along with the SMILES representations of molecules and their corresponding molecular IDs for identification.
 
 - The 'labels/*.csv' file contains data on molecular properties derived from binding analysis, along with their corresponding molecule IDs, Each file name corresponds to a specific protein target name.
+
+- The 'docking_id_idx_map.json' file provides the mapping from molecule IDs to the index in the 'diversity_molecule_set.pkl' file.
 
 - The 'diversity_molecule_set.pkl' file contains the 3D coordinates of molecules, necessary for 3D-based molecular representation learning methods. The elements in the pickle file are structured as follows:
 
@@ -71,9 +64,24 @@ The Documentaion of data files in the https://huggingface.co/datasets/shikun001/
        [-2.57726543,  2.95578027,  0.41052655]])], 'atoms': ['C', 'C', 'C', 'N', 'C', 'C', 'C', 'N', 'C', 'C', 'C', 'N', 'C', 'N', 'C', 'C', 'C', 'C', 'N', 'C', 'C', 'N', 'C', 'C', 'C', 'O'], 'smi': 'CC(C)n(c1c2CN(Cc3cn(C)nc3C)CC1)nc2-c1ncc(C)o1', 'mol': <rdkit.Chem.rdchem.Mol object at 0x7fe70e732f40>}
 ```
 
+### Prerequisites
+
+Model latent representations and descriptors used in our paper can download from link [Google Drive](https://drive.google.com/drive/folders/1vs0CtQmSwlX0BdjHtQeSHbw9p1XCkFOE).
+
+### Environment
+```
+conda create -n py3.9 python=3.9
+conda activate py3.9
+pip install -r requirements.txt
+```
+
 ## Usage
-We provide the linear probe code and MLP code，ensuring that all results are easily reproducible.
+
+[docs/tutorials/load_dataset.py](https://github.com/Zhenger959/MoleculeCLA/blob/main/docs/tutorials/load_dataset.py) shows how to download and use our dataset.
+
+
 ### Linear Probe
+Using the model latent representations or descriptors, a linear regression model is trained to predict the property label.
 ```
 python src/linear_probe.py \
     -m  Linear_regression \
@@ -84,9 +92,55 @@ python src/linear_probe.py \
     -o res
 ```
 
-### MLP
+### Multi-Layer Perceptron
+We use the following settings in our Multi-Layer Perceptron experiments. Each experiment is conducted on an NVIDIA A100-PCIE-40GB GPU and takes approximately half an hour to converge.
+
+You can directly run the code by executing the shell command `bash scripts\mlp.sh`.
 ```
-bash scripts\mlp.sh
+LR=1e-4
+BATCH_SIZE=128
+MAX_EPOCHS=50
+DROPOUT_RATE=0.0
+WARMUP=0.02
+
+LOG_DIR='logs'
+FEATURE_NAME="mols_unimol.pkl"
+TASK_NAME="docking_score"
+TARGET="ADRB2"
+EMBED_PATH="data/model_feature"
+
+python src/mlp_main.py \
+    experiment=moleculecla_mlp \
+    tags=\["${FEATURE_NAME}","${TASK_NAME}"\] \
+    task_name=${FEATURE_NAME}_${TARGET}_${TASK_NAME} \
+    data.task_idx=${TASK_IDX} \
+    data.train.dataset.target=${TARGET} \
+    data.val.dataset.target=${TARGET} \
+    data.test.dataset.target=${TARGET} \
+    data.train.dataset.embed_path=${EMBED_PATH} \
+    data.val.dataset.embed_path=${EMBED_PATH} \
+    data.test.dataset.embed_path=${EMBED_PATH} \
+    model.optimizer.lr=${LR} \
+    data.batch_size=${BATCH_SIZE} \
+    trainer.max_epochs=${MAX_EPOCHS} \
+    model.model.dropout_rate=${DROPOUT_RATE} \
+    model.lr_scheduler.warmup=${WARMUP}
+```
+
+### Fine-tuning
+We loaded the parameter values from the offical pre-trained models checkpoints, and fine-tune them on five representative tasks (hbond, ecoul, esite, docking and emodel). In our paper, we train a separate MLP model for each protein target and simultaneously predict these tasks.
+
+## Citation
+```
+@misc{feng2024moleculeclarethinkingmolecularbenchmark,
+      title={MoleculeCLA: Rethinking Molecular Benchmark via Computational Ligand-Target Binding Analysis}, 
+      author={Shikun Feng and Jiaxin Zheng and Yinjun Jia and Yanwen Huang and Fengfeng Zhou and Wei-Ying Ma and Yanyan Lan},
+      year={2024},
+      eprint={2406.17797},
+      archivePrefix={arXiv},
+      primaryClass={physics.chem-ph},
+      url={https://arxiv.org/abs/2406.17797}, 
+}
 ```
 
 ## License

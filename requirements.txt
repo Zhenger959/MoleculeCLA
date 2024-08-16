@@ -20,6 +20,7 @@ wandb
 lmdb
 pandas
 numpy
+datasets
 
 # --------- others --------- #
 rootutils       # standardizing the project root setup
