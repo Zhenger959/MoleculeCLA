@@ -2,7 +2,7 @@
  # @Author: Jiaxin Zheng
  # @Date: 2024-03-09 12:32:00
  # @LastEditors: Jiaxin Zheng
- # @LastEditTime: 2024-06-04 10:29:22
+ # @LastEditTime: 2024-08-16 11:52:54
  # @Description: 1 task 0.5h 180tasks 90h  25h
 ### 
 export CUDA_VISIBLE_DEVICES=0
@@ -25,13 +25,6 @@ FEATURE_FILE_LIST=(
 TASK_NAME_LIST=(
     "docking_score"
 )
-
-# ! same order
-# TASK_ORDER=('docking_score' 'glide_lipo' 'glide_hbond' 'glide_evdw' 'glide_ecoul' 'glide_erotb' 'glide_esite' 'glide_emodel' 'glide_einternal')
-# declare -A TASK_DICT
-# for i in "${!task_order[@]}"; do
-#     TASK_DICT["${task_order[$i]}"]=$i
-# done
 
 TARGET_LIST=(
     "ADRB2"
@@ -61,13 +54,6 @@ for FEATURE_FILE_IDX in "${!FEATURE_FILE_LIST[@]}"; do
                 data.train.dataset.embed_path=${EMBED_PATH} \
                 data.val.dataset.embed_path=${EMBED_PATH} \
                 data.test.dataset.embed_path=${EMBED_PATH} \
-                data.data_dir=${DATA_DIR} \
-                data.train.dataset.data_dir=${DATA_DIR} \
-                data.val.dataset.data_dir=${DATA_DIR} \
-                data.test.dataset.data_dir=${DATA_DIR} \
-                data.train.dataset.split_file=${SPLIT_FILE} \
-                data.val.dataset.split_file=${SPLIT_FILE} \
-                data.test.dataset.split_file=${SPLIT_FILE} \
                 model.optimizer.lr=${LR} \
                 data.batch_size=${BATCH_SIZE} \
                 trainer.max_epochs=${MAX_EPOCHS} \
