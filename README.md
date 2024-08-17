@@ -18,7 +18,7 @@ We present MoleculeCLA: a large-scale dataset consisting of approximately 140,00
 |          | glide\_esite (esite)           | Polar thermodynamic contribution              | Polarity                     |
 |          | glide\_erotb (erotb)           | Rotatable bond constraint energy              | Rotational flexibility       |
 |          | glide\_einternal (einternal)   | Internal torsional energy                     | Rotational flexibility       |
-| Biological | docking\_score (docking)      | Docking score                                 | Binding affinity              |
+| Biological | docking\_score (docking score)      | Docking score                                 | Binding affinity              |
 |          | glide\_emodel (emodel)         | Model energy                                  | Binding affinity              |
 
 ## Getting Started
