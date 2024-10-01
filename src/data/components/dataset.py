@@ -1,8 +1,8 @@
 '''
-Author: Jiaxin Zheng
+Author: 
 Date: 2024-05-22 12:07:23
-LastEditors: Jiaxin Zheng
-LastEditTime: 2024-08-16 16:30:20
+LastEditors: 
+LastEditTime: 2024-10-01 09:59:12
 Description: 
 '''
 import os
@@ -45,8 +45,8 @@ class MoleculeCLADataset(Dataset):
                  task_names
                  ):
         self.embed_path = embed_path
-        self.file_path = hf_hub_download(repo_id="shikun001/MoleculeCLA", filename=f'labels/{target}.csv', repo_type="dataset")
-        self.split_file = hf_hub_download(repo_id="shikun001/MoleculeCLA", filename=f'data.csv', repo_type="dataset")
+        self.file_path = hf_hub_download(repo_id="anonymousxxx/MoleculeCLA", filename=f'labels/{target}.csv', repo_type="dataset")
+        self.split_file = hf_hub_download(repo_id="anonymousxxx/MoleculeCLA", filename=f'data.csv', repo_type="dataset")
         
         self.split_dict = {'train':0, 'valid':1, 'test':2}
         self.task_type = task_type

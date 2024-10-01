@@ -1,3 +1,10 @@
+'''
+Author: 
+Date: 2024-10-01 09:57:37
+LastEditors: 
+LastEditTime: 2024-10-01 09:59:01
+Description: 
+'''
 import json
 
 import numpy as np
@@ -15,10 +22,10 @@ def main():
     
     type = 'train'
     target = targets[5]
-    file_path = hf_hub_download(repo_id="shikun001/MoleculeCLA", filename=f'labels/{target}.csv', repo_type="dataset")
-    split_file = hf_hub_download(repo_id="shikun001/MoleculeCLA", filename=f'data.csv', repo_type="dataset")
-    mol_data_file_path = hf_hub_download(repo_id="shikun001/MoleculeCLA", filename="diversity_molecule_set.pkl", repo_type="dataset")
-    idx_map_file_path = hf_hub_download(repo_id="shikun001/MoleculeCLA", filename="docking_id_idx_map.json", repo_type="dataset")
+    file_path = hf_hub_download(repo_id="anonymousxxx/MoleculeCLA", filename=f'labels/{target}.csv', repo_type="dataset")
+    split_file = hf_hub_download(repo_id="anonymousxxx/MoleculeCLA", filename=f'data.csv', repo_type="dataset")
+    mol_data_file_path = hf_hub_download(repo_id="anonymousxxx/MoleculeCLA", filename="diversity_molecule_set.pkl", repo_type="dataset")
+    idx_map_file_path = hf_hub_download(repo_id="anonymousxxx/MoleculeCLA", filename="docking_id_idx_map.json", repo_type="dataset")
     
     # Get all training property labels
     df = pd.read_csv(file_path)

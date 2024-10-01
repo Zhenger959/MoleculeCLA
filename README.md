@@ -1,8 +1,8 @@
 <!--
- * @Author: Jiaxin Zheng
+ * @Author: 
  * @Date: 2024-06-06 11:01:32
  * @LastEditors: Jiaxin Zheng
- * @LastEditTime: 2024-08-16 15:19:07
+ * @LastEditTime: 2024-10-01 10:00:36
  * @Description: 
 -->
 # MoleculeCLA
@@ -22,8 +22,8 @@ We present MoleculeCLA: a large-scale dataset consisting of approximately 140,00
 |          | glide\_emodel (emodel)         | Model energy                                  | Binding affinity              |
 
 ## Getting Started
-### Data Download
-MoleculeCLA can download from [HuggingFace](https://huggingface.co/datasets/shikun001/MoleculeCLA).
+### Prerequisites
+MoleculeCLA data and model latent representations used in our paper can download from [HuggingFace](https://huggingface.co/datasets/anonymousxxx/MoleculeCLA).
 
 ### Data Format
 
@@ -64,20 +64,12 @@ MoleculeCLA can download from [HuggingFace](https://huggingface.co/datasets/shik
        [-2.57726543,  2.95578027,  0.41052655]])], 'atoms': ['C', 'C', 'C', 'N', 'C', 'C', 'C', 'N', 'C', 'C', 'C', 'N', 'C', 'N', 'C', 'C', 'C', 'C', 'N', 'C', 'C', 'N', 'C', 'C', 'C', 'O'], 'smi': 'CC(C)n(c1c2CN(Cc3cn(C)nc3C)CC1)nc2-c1ncc(C)o1', 'mol': <rdkit.Chem.rdchem.Mol object at 0x7fe70e732f40>}
 ```
 
-### Prerequisites
-
-Model latent representations and descriptors used in our paper can download from link [Google Drive](https://drive.google.com/drive/folders/1vs0CtQmSwlX0BdjHtQeSHbw9p1XCkFOE).
-
 ### Environment
 ```
 conda create -n py3.9 python=3.9
 conda activate py3.9
 pip install -r requirements.txt
 ```
-
-## Usage
-
-[docs/tutorials/load_dataset.py](https://github.com/Zhenger959/MoleculeCLA/blob/main/docs/tutorials/load_dataset.py) shows how to download and use our dataset.
 
 
 ### Linear Probe
@@ -138,19 +130,6 @@ We loaded the parameter values from the offical pre-trained models checkpoints, 
 | Frad    | Adam      | 1.00E-04          | 0                 | 100   | 32         |
 | SliDe   | Adam      | 1.00E-04          | 0                 | 100   | 32         |
 
-
-## Citation
-```
-@misc{feng2024moleculeclarethinkingmolecularbenchmark,
-      title={MoleculeCLA: Rethinking Molecular Benchmark via Computational Ligand-Target Binding Analysis}, 
-      author={Shikun Feng and Jiaxin Zheng and Yinjun Jia and Yanwen Huang and Fengfeng Zhou and Wei-Ying Ma and Yanyan Lan},
-      year={2024},
-      eprint={2406.17797},
-      archivePrefix={arXiv},
-      primaryClass={physics.chem-ph},
-      url={https://arxiv.org/abs/2406.17797}, 
-}
-```
 
 ## License
 Our dataset is available under the MIT license. The evaluation code is hosted by the GitHub organization and uses the MIT license.
