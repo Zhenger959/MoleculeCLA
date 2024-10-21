@@ -1,10 +1,3 @@
-<!--
- * @Author: 
- * @Date: 2024-06-06 11:01:32
- * @LastEditors: Jiaxin Zheng
- * @LastEditTime: 2024-10-01 10:00:36
- * @Description: 
--->
 # MoleculeCLA
 ## Overview
 We present MoleculeCLA: a large-scale dataset consisting of approximately 140,000 small molecules derived from computational ligand-target binding analysis, providing nine properties that cover chemical, physical, and biological aspects.
